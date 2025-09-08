@@ -1,0 +1,19 @@
+000001 set [1] to value of adress [2]
+000011 write [1] 
+000010 read from user 1 bit into [1]
+000101 set [1] to value of [2]
+
+# Mathimatical Operations
+
+000100 add [2] + [3] and place it in [1]
+001100 multiply [2] * [3] and place it in [1]
+001000 subtract [2] - [3] and place it in [1]
+001010 divide [2] / [3] and place it in [1]
+
+# function ness
+100001 set function
+  [1] name [2:] instructions
+  arg = 100000
+
+1***** run function [1] as arg
+
