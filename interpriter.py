@@ -20,20 +20,14 @@ def interprit(code, arg=None):
             memory[int(line[1],2)] = int(line[2], 2)
 
         # mathamatical operations
-        elif line[0] == "000100":
+        elif line[0] == "010100":
             memory[int(line[1],2)] = memory[int(line[2],2)] + memory[int(line[3],2)]
-        elif line[0] == "001100":
+        elif line[0] == "011100":
             memory[int(line[1],2)] = memory[int(line[2],2)] * memory[int(line[3],2)]
-        elif line[0] == "001000":
+        elif line[0] == "011000":
             memory[int(line[1],2)] = memory[int(line[2],2)] - memory[int(line[3],2)]
-        elif line[0] == "001010":
+        elif line[0] == "011000":
             memory[int(line[1],2)] = memory[int(line[2],2)] / memory[int(line[3],2)]
-        elif line[0] == "100001":
+        elif line[0] == "110001":
             functions.append([line[1],line[2:]])
 
-	# functions
-        elif line[0].startswith("1"):
-            for function in functions:
-                if function[0] == line[0]:
-                    interprit(" ".join(function[1]) + "\n", arg)
-        print(memory[0:10])
