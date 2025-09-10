@@ -42,7 +42,7 @@ def createMemoryFile(bytes):
 def interprit(code, arg=None):
     global functions, memory, currentLine
     if arg is not None:
-        memory[int("100000",2)] = arg
+        memory[int("10000000",2)] = arg
     newCode=code.split("\n")
     while currentLine < len(newCode):
         time.sleep(0.01)
@@ -51,50 +51,50 @@ def interprit(code, arg=None):
             currentLine+=1
             continue
         line = line.split(" ")
-        if line[0] == "000001":
+        if line[0] == "00000001":
             memory[int(line[1], 2)] = memory[int(line[2], 2)]
-        elif line[0] == "000010":
+        elif line[0] == "00000010":
             memory[int(line[1], 2)] = "0"+bin(ord(read_char()))[2:]
-        elif line[0] == "000011":
+        elif line[0] == "00000011":
             address = int(line[1], 2)
             print(chr(int(memory[address],2)), end='', flush=True)
-        elif line[0] == "000100":
+        elif line[0] == "00000100":
             memory[int(line[1],2)] = line[2]
 
         # mathamatical operations
-        elif line[0] == "010100":
+        elif line[0] == "00010100":
             memory[int(line[1],2)] = int(memory[int(line[2],2)],2) + int(memory[int(line[3],2)],2)
-        elif line[0] == "011100":
+        elif line[0] == "00011100":
             memory[int(line[1],2)] = int(memory[int(line[2],2)],2) * int(memory[int(line[3],2)],2)
-        elif line[0] == "011000":
+        elif line[0] == "00011000":
             memory[int(line[1],2)] = int(memory[int(line[2],2)],2) - int(memory[int(line[3],2)],2)
-        elif line[0] == "011010":
+        elif line[0] == "00011010":
             memory[int(line[1],2)] = int(memory[int(line[2],2)],2) / int(memory[int(line[3],2)],2)
-        elif line[0] == "110001":
+        elif line[0] == "00110001":
             functions.append([line[1],line[2:]])
         currentLine+=1
 
         if line[0][0] == "1": #if statements
-            if line[0] == "100001":
+            if line[0] == "00100001":
                 if memory[int(line[1], 2)] == memory[int(line[2], 2)]:
                     currentLine=int(line[3], 2)
                     print(f"goto {int(line[3], 2)}")
-            elif line[0] == "100010":
+            elif line[0] == "00100010":
                 if memory[int(line[1],2)] >= memory[int(line[2],2)]:
                     currentLine=int(line[3], 2)
-            elif line[0] == "100011":
+            elif line[0] == "00100011":
                 if memory[int(line[1],2)] <= memory[int(line[2],2)]:
                     currentLine=int(line[3], 2)
-            elif line[0] == "100110":
+            elif line[0] == "00100110":
                 if memory[int(line[1],2)] > memory[int(line[2],2)]:
                     currentLine=int(line[3], 2)
-            elif line[0] == "100111":
+            elif line[0] == "00100111":
                 if memory[int(line[1],2)] < memory[int(line[2],2)]:
                     currentLine=int(line[3], 2)
-            elif line[0] == "100101":
+            elif line[0] == "00100101":
                 if memory[int(line[1],2)] != memory[int(line[2],2)]:
                     currentLine=int(line[3], 2)
-        elif line[0] == "001010":  # reading a specific line from file
+        elif line[0] == "00001010":  # reading a specific line from file
             target_line = int(memory[int(line[1], 2)], 2)
             result = '00000000'  # default value if line not found
 
@@ -106,7 +106,7 @@ def interprit(code, arg=None):
 
             memory[int(line[2], 2)] = result
 
-        elif line[0] == "010101": #writing to memory
+        elif line[0] == "00010101": #writing to memory
             whatToWrite=memory[int(line[1], 2)]
             where = int(line[2],2)
             with open("memory.bhm", "r") as file:
@@ -116,3 +116,13 @@ def interprit(code, arg=None):
 
             with open("memory.bhm", "w") as file:
                 file.write("\n".join(file_contents) + "\n")
+        elif line[0] == "00001111":
+            command,args=memory[int(line[1],2)],line[2:]
+            newArgs=[]
+            for arg in args:
+                newArgs.append(memory[int(arg, 2)])
+            command = " ".join(command)
+            args = " ".join(args)
+            command = command + " " + args
+            print(command)
+            interprit(command)

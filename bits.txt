@@ -1,26 +1,26 @@
-000001 set [1] to value of adress [2]
-000010 read from user 1 bit into [1]
-000011 write [1] 
-000100 set [1] to value of [2]
+00000001 set [1] to value of adress [2]
+00000010 read from user 1 bit into [1]
+00000011 write [1] 
+00000100 set [1] to value of [2]
 
 # Mathimatical Operations
 
-010100 add [2] + [3] and place it in [1]
-011100 multiply [2] * [3] and place it in [1]
-011000 subtract [2] - [3] and place it in [1]
-011010 divide [2] / [3] and place it in [1]
+00010100 add [2] + [3] and place it in [1]
+00011100 multiply [2] * [3] and place it in [1]
+00011000 subtract [2] - [3] and place it in [1]
+00011010 divide [2] / [3] and place it in [1]
 
 # statements
-100001 if [0] == [1] goto [2]
-100010 if [0] >= [1] goto [2]
-100011 if [0] <= [1] goto [2]
-100110 if [0] > [1] goto [2]
-100111 if [0] < [1] goto [2]
-100101 if [0] != [1] goto [2]
+00100001 if [0] == [1] goto [2]
+00100010 if [0] >= [1] goto [2]
+00100011 if [0] <= [1] goto [2]
+00100110 if [0] > [1] goto [2]
+00100111 if [0] < [1] goto [2]
+00100101 if [0] != [1] goto [2]
 
 # running from memory {to do }
-001111 run from memory [1] with args memry[2:]
+00001111 run from memory [1] with args memry[2:]
 
-#loading from and into files
-001010 load from persistent byte persistant[1] to memory[2]
-010101 write to persistent memory memory[1] -> persistent[memory[2]]
+# loading from and into files
+00001010 load from persistent byte persistant[1] to memory[2]
+00010101 write to persistent memory memory[1] -> persistent[memory[2]]
