@@ -1,4 +1,28 @@
 import time
+import sys
+
+if sys.platform.startswith('win'):
+    import msvcrt
+
+    def read_char():
+        return msvcrt.getch().decode()
+
+else:
+    import tty
+    import termios
+
+    def read_char():
+        fd = sys.stdin.fileno()
+        old_settings = termios.tcgetattr(fd)
+        try:
+            tty.setraw(fd)
+            ch = sys.stdin.read(1)
+        finally:
+            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+        return ch
+
+
+
 memory = [0] * 10000000
 functions = []
 currentLine = 0
@@ -17,7 +41,7 @@ def interprit(code, arg=None):
         if line[0] == "000001":
             memory[int(line[1], 2)] = memory[int(line[2], 2)]
         elif line[0] == "000010":
-            memory[int(line[1], 2)] = ord(input()[0])
+            memory[int(line[1], 2)] = read_char()
         elif line[0] == "000011":
             address = int(line[1], 2)
             print(chr(memory[address]), end='')
