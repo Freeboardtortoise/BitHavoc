@@ -17,3 +17,10 @@
 100110 if [0] > [1] goto [2]
 100111 if [0] < [1] goto [2]
 100101 if [0] != [1] goto [2]
+
+# running from memory {to do }
+001111 run from memory [1] with args memry[2:]
+
+#loading from and into files
+001010 load from persistent byte persistant[1] to memory[2]
+010101 write to persistent memory memory[1] -> persistent[memory[2]]

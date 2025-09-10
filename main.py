@@ -8,4 +8,5 @@ import sys
 file=sys.argv[1]
 with open(file, "r") as file:
     file = file.read()
+interpriter.createMemoryFile(64)
 interpriter.interprit(file)
