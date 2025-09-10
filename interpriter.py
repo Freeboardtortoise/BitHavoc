@@ -109,7 +109,6 @@ def interprit(code, arg=None):
         elif line[0] == "010101": #writing to memory
             whatToWrite=memory[int(line[1], 2)]
             where = int(line[2],2)
-            print(f"writing {whatToWrite} to {where}")
             with open("memory.bhm", "r") as file:
                 file_contents = file.read().splitlines()
 
