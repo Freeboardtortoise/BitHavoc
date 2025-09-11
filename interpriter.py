@@ -53,7 +53,6 @@ def interprit(code, arg=None, o44=False):
             currentLine+=1
             continue
         line = line.split(" ")
-        print(line)
         if line[0] == "00000001":
             memory[int(line[1], 2)] = memory[int(line[2], 2)]
         elif line[0] == "00000010":
@@ -152,12 +151,11 @@ def interprit(code, arg=None, o44=False):
 
             command_line = " ".join([cmd_bin] + arg_bins)
 
-            # debug help (optional) — shows exactly what you're about to execute
-            print("CALL ->", command_line)
-
             # run the constructed single-line command in isolation
             saved_current = currentLine
             currentLine = 0               # ensure nested run starts at its own beginning
             interprit(command_line, o44=True)
             currentLine = saved_current   # restore outer execution point
+        elif line[0] == "01000000":
+            currentLine = int(line[1])
 
