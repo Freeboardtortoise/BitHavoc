@@ -1,5 +1,4 @@
 import sys
-import time
 import interpriter  # Assuming this is your safe custom module
 
 def main():
@@ -18,23 +17,22 @@ def main():
     arg = sys.argv[2]
 
     if command == "run":
-        try:
-            # Basic validation to avoid dangerous paths, can add more checks
-            if ".." in arg or arg.startswith("/"):
-                print("Invalid filename")
-                return
+        # Basic validation to avoid dangerous paths, can add more checks
+        if ".." in arg or arg.startswith("/"):
+            print("Invalid filename")
+            return
 
-            with open(arg, "r") as f:
-                code = f.read()
+        with open(arg, "r") as f:
+            code = f.read()
 
-            interpriter.interprit(code)
+        interpriter.interprit(code)
 
-        except FileNotFoundError:
-            print(f"File not found: {arg}")
-        except IOError as e:
-            print(f"Error reading file: {e}")
-        except Exception as e:
-            print(f"An error occurred while interpreting the file: {e}")
+#        except FileNotFoundError:
+#          print(f"File not found: {arg}")
+#        except IOError as e:
+#           print(f"Error reading file: {e}")
+#        except Exception as e:
+#            print(f"An error occurred while interpreting the file: {e}")
 
     elif command == "create-persistent-storage":
         try:

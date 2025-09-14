@@ -24,3 +24,6 @@
 # loading from and into files
 00001010 load from persistent byte persistant[1] to memory[2]
 00010101 write to persistent memory memory[1] -> persistent[memory[2]]
+
+# threading
+01011111 thread start at line [0] and end at line [1] and start at time [2] and call it [3]

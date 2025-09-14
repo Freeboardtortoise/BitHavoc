@@ -1,0 +1,141 @@
+{
+  "header": {
+    "comment": "eric project file for project BitHavoc",
+    "copyright": "Copyright (C) 2025 Freeboardtortoise, freeboardtortoise@proton.me",
+    "saved": "2025-09-13, 15:30:21"
+  },
+  "project": {
+    "AUTHOR": "Freeboardtortoise",
+    "CHECKERSPARMS": {},
+    "DESCRIPTION": "a language that likes binary",
+    "DOCSTRING": "",
+    "DOCUMENTATIONPARMS": {},
+    "EMAIL": "freeboardtortoise@proton.me",
+    "EMBEDDED_VENV": true,
+    "EOL": 0,
+    "FILETYPES": {
+      "*.cfg": "OTHERS",
+      "*.egg-info": "__IGNORE__",
+      "*.epj": "OTHERS",
+      "*.ini": "OTHERS",
+      "*.json": "OTHERS",
+      "*.md": "OTHERS",
+      "*.py": "SOURCES",
+      "*.py3": "SOURCES",
+      "*.pyw": "SOURCES",
+      "*.pyw3": "SOURCES",
+      "*.rst": "OTHERS",
+      "*.toml": "OTHERS",
+      "*.txt": "OTHERS",
+      "*.yaml": "OTHERS",
+      "*.yml": "OTHERS",
+      "GNUmakefile": "OTHERS",
+      "Makefile": "OTHERS",
+      "README": "OTHERS",
+      "README.*": "OTHERS",
+      "makefile": "OTHERS"
+    },
+    "FORMS": [],
+    "HASH": "637f2603180ba01e890d4244afe51292980378b8",
+    "IDLPARAMS": {
+      "DefinedNames": [],
+      "IncludeDirs": [],
+      "UndefinedNames": []
+    },
+    "LEXERASSOCS": {},
+    "LICENSE": "",
+    "MAINSCRIPT": "main.py",
+    "MAKEPARAMS": {
+      "MakeEnabled": false,
+      "MakeExecutable": "",
+      "MakeFile": "",
+      "MakeParameters": "",
+      "MakeTarget": "",
+      "MakeTestOnly": true
+    },
+    "MIXEDLANGUAGE": false,
+    "OTHERS": [
+      ".codesandbox/tasks.json",
+      ".gitignore",
+      "README.md",
+      "bits.txt"
+    ],
+    "OTHERTOOLSPARMS": {},
+    "PACKAGERSPARMS": {},
+    "PROGLANGUAGE": "Python3",
+    "PROJECTTYPE": "Console",
+    "PROJECTTYPESPECIFICDATA": {},
+    "RCCPARAMS": {
+      "CompressLevel": 0,
+      "CompressionDisable": false,
+      "CompressionThreshold": 70,
+      "PathPrefix": ""
+    },
+    "RESOURCES": [],
+    "SOURCES": [
+      "__init__.py",
+      "editor.py",
+      "globalVar.py",
+      "interpriter.py",
+      "lineExecuter.py",
+      "main.py",
+      "threader.py"
+    ],
+    "SOURCESDIR": "",
+    "SPELLEXCLUDES": "",
+    "SPELLLANGUAGE": "en_US",
+    "SPELLWORDS": "",
+    "TESTING_FRAMEWORK": "pytest",
+    "TRANSLATIONEXCEPTIONS": [],
+    "TRANSLATIONPATTERN": "",
+    "TRANSLATIONS": [],
+    "TRANSLATIONSBINPATH": "",
+    "TRANSLATIONSOURCESTARTPATH": "",
+    "UICPARAMS": {
+      "Package": "",
+      "PackagesRoot": "",
+      "RcSuffix": ""
+    },
+    "VCS": "Git",
+    "VCSOPTIONS": {
+      "add": [
+        ""
+      ],
+      "checkout": [
+        ""
+      ],
+      "commit": [
+        ""
+      ],
+      "diff": [
+        ""
+      ],
+      "export": [
+        ""
+      ],
+      "global": [
+        ""
+      ],
+      "history": [
+        ""
+      ],
+      "log": [
+        ""
+      ],
+      "remove": [
+        ""
+      ],
+      "status": [
+        ""
+      ],
+      "tag": [
+        ""
+      ],
+      "update": [
+        ""
+      ]
+    },
+    "VCSOTHERDATA": {},
+    "VERSION": "0.1"
+  }
+}
