@@ -23,7 +23,8 @@ OPCODES = {
     "00001010": "load from persistent byte persistent[1] to memory[2]",
     "00010101": "write to persistent memory memory[1] -> persistent[memory[2]]",
     "01000000": "goto line [1] and run from there",
-    "01011111": "thread: start line [0], end line [1], time [2]"
+    "01011111": "thread: start line [0], end line [1], time [2]", 
+    "01001010":"pause for [1] secconds"
 }
 
 
