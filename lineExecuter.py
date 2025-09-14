@@ -38,6 +38,7 @@ class executor:
         while current_line < len(code.splitlines()):
             line = code[current_line]
             self.execute_line(line)
+            current_line+=1
     def execute_line(self,  line):
         if len(" ".join(line)) < 7:
             gv.currentLine+=1
@@ -55,13 +56,13 @@ class executor:
 
         # mathamatical operations
         elif line[0] == "00010100":
-            gv.memory[int(line[1],2)] = int(gv.memory[int(line[2],2)],2) + int(gv.memory[int(line[3],2)],2)
+            gv.memory[int(line[1],2)] = bin(int(gv.memory[int(line[2],2)],2) + int(gv.memory[int(line[3],2)],2))[2:]
         elif line[0] == "00011100":
-            gv.memory[int(line[1],2)] = int(gv.memory[int(line[2],2)],2) * int(gv.memory[int(line[3],2)],2)
+            gv.memory[int(line[1],2)] = bin(int(gv.memory[int(line[2],2)],2) * int(gv.memory[int(line[3],2)],2))[2:]
         elif line[0] == "00011000":
-            gv.memory[int(line[1],2)] = int(gv.memory[int(line[2],2)],2) - int(gv.memory[int(line[3],2)],2)
+            gv.memory[int(line[1],2)] = bin(int(gv.memory[int(line[2],2)],2) - int(gv.memory[int(line[3],2)],2))[2:]
         elif line[0] == "00011010":
-            gv.memory[int(line[1],2)] = int(gv.memory[int(line[2],2)],2) / int(gv.memory[int(line[3],2)],2)
+            gv.memory[int(line[1],2)] = bin(int(gv.memory[int(line[2],2)],2) / int(gv.memory[int(line[3],2)],2))[2:]
         gv.currentLine+=1
 
         if line[0][0] == "1": #if statements

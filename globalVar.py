@@ -1,4 +1,4 @@
-memory = [''] * 10000000
+memory = ['00000000'] * 10000000
 functions = []
 currentLine = 0
 code = ""
