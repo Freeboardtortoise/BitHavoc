@@ -89,7 +89,7 @@ class executor:
             target_line = int(gv.memory[int(line[1], 2)], 2)
             result = '00000000'  # default value if line not found
 
-            with open("gv.memory.bhm", "r") as file:
+            with open("memory.bhm", "r") as file:
                 for current_line_number, line_text in enumerate(file):
                     if current_line_number == target_line:
                         result = line_text.strip()
@@ -100,7 +100,7 @@ class executor:
         elif line[0] == "00010101": #writing to gv.memory
             whatToWrite=gv.memory[int(line[1], 2)]
             where = int(line[2],2)
-            with open("gv.memory.bhm", "r") as file:
+            with open("memory.bhm", "r") as file:
                 file_contents = file.read().splitlines()
 
             file_contents[where] = whatToWrite
