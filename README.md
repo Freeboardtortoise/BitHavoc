@@ -64,9 +64,22 @@ The bitHavoc editor is an editor that prioritises speed and you can only type 1 
 
 | Op code  | function                          |
 | -------- | --------------------------------- |
-| 00000001 | set [1] to value of address [2]   |
+| 00000001 | move something somewhere          |
 | 00000010 | read from user 1 bit into [1]     |
 | 00000011 | write memory adress [1] to screen |
+
+mov args
+| arg space | arg option | what it does |
+|-----------|------------|--------------|
+| 3 | 00000001 | memory[1] to memory[2] |
+| 3 | 00000010 | memory[1] to var[2] |
+
+printing args
+| arg place | arg value | what it does |
+|-----------|-----------|--------------|
+| 2 | 00000001 | print the number value |
+| 2 | 00000010 | print the asci value |
+| 2 | 00000011 | print the raw bin value|
 
 If statements
 |Opt Code|function|

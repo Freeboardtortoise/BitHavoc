@@ -48,5 +48,5 @@ def interprit(code, arg=None, o44=False):
         if o44==True:
             gv.currentLine=0
         time.sleep(0.01)
-        line = newCode[gv.currentLine]
+        line = newCode[gv.currentLine].split(" ")
         line_executer.execute_line(line)
