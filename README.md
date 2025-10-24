@@ -77,8 +77,8 @@ mov args
 printing args
 | arg place | arg value | what it does |
 |-----------|-----------|--------------|
-| 2 | 00000001 | print the number value |
-| 2 | 00000010 | print the asci value |
+| 2 | 00000010 | print the number value |
+| 2 | 00000001 | print the asci value |
 | 2 | 00000011 | print the raw bin value|
 
 If statements

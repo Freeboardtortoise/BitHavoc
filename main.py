@@ -7,7 +7,7 @@ def main():
 
     # Check for minimum required args
     if len(sys.argv) < 3:
-        print("Usage: python script.py <command> <arg>")
+        print("Usage: bith <command> <arg>")
         print("Commands:")
         print("  run <filename>")
         print("  create-persistent-storage <size>")

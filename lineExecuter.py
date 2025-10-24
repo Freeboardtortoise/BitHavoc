@@ -24,6 +24,13 @@ else:
             termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
         print(ch, end='', flush=True)
         return ch
+def get_value(bit):
+    if bit[0] == "1": #is memory
+        return int(gv.memory[int(bit[1:], 2)])
+    else:
+        return int(bit[1:], 2)
+def to_bin(thing):
+        return "0"+(bin(thing)[2:])
 
 
 class executor:
@@ -40,69 +47,70 @@ class executor:
             line = code[current_line]
             self.execute_line(line)
             current_line += 1
-
     def execute_line(self,  line):
         if len(" ".join(line)) < 7:
             gv.currentLine += 1
             return False
         if line[0] == "00000001":
-            arg = line[3]
-            if arg == "00000001":
-                gv.memory[int(line[1], 2)] = gv.memory[int(line[2], 2)]
-            elif arg == "00000011":
-                gv.memory[int(line[1], 2)] = line[2]
+            if line[2][0] == "1":
+                line[2] = line[2][1:]
+            else:
+                print(line)
+                print("what do you want me to do with this mov thing?\nI cant mov a number into a number?")
+            gv.memory[int(line[1],2)] = get_value(line[2])
 
         elif line[0] == "00000010":
-            gv.memory[int(line[1], 2)] = "0"+bin(ord(read_char()))[2:]
+            gv.memory[get_value(line[1])] = to_bin(ord(read_char()))
         elif line[0] == "00000011":
-            address = int(line[1], 2)
-            if line[2] == "00000011":
-                print(gv.memory[address])
-            if line[2] == "00000010":
-                print(int(line[address],2),end='', flush=True)
-            if line[2] == "00000001":
-                print(chr(int(gv.memory[address], 2)), end='', flush=True)
-        elif line[0] == "00000100":
-            gv.memory[int(line[1], 2)] = line[2]
+            address = get_value(line[1])
+            if len(line) >= 3:
+                arg = line[2]
+            else:
+                arg = "00000001"
+            if arg == "00000011":
+                print(to_bin(address))
+            if arg == "00000010":
+                print(address,end='', flush=True)
+            if arg == "00000001":
+                print(chr(address), end='', flush=True)
 
         # mathamatical operations
         elif line[0] == "00010100":
-            gv.memory[int(line[1], 2)] = bin(
-                int(gv.memory[int(line[2], 2)], 2) + int(gv.memory[int(line[3], 2)], 2))[2:]
+            gv.memory[get_value(line[1])] = to_bin(
+                get_value(line[2]) + get_value(line[3]))
         elif line[0] == "00011100":
-            gv.memory[int(line[1], 2)] = bin(
-                int(gv.memory[int(line[2], 2)], 2) * int(gv.memory[int(line[3], 2)], 2))[2:]
+            gv.memory[get_value(line[1])] = to_bin(
+                get_value(line[2]) * get_value(line[3]))
         elif line[0] == "00011000":
-            gv.memory[int(line[1], 2)] = bin(
-                int(gv.memory[int(line[2], 2)], 2) - int(gv.memory[int(line[3], 2)], 2))[2:]
+            gv.memory[get_value(line[1])] = to_bin(
+                get_value(line[2]) - get_value(line[3]))
         elif line[0] == "00011010":
-            gv.memory[int(line[1], 2)] = bin(
-                int(gv.memory[int(line[2], 2)], 2) / int(gv.memory[int(line[3], 2)], 2))[2:]
+            gv.memory[get_value(line[1])] = to_bin(
+                get_value(line[2]) / get_value(line[3]))
         gv.currentLine += 1
 
         if line[0][0] == "1":  # if statements
             if line[0] == "00100001":
-                if gv.memory[int(line[1], 2)] == gv.memory[int(line[2], 2)]:
-                    gv.currentLine = int(line[3], 2)
-                    print(f"goto {int(line[3], 2)}")
+                if get_value(line[1]) == get_value(line[2]):
+                    gv.currentLine = get_value(line[3])
             elif line[0] == "00100010":
-                if gv.memory[int(line[1], 2)] >= gv.memory[int(line[2], 2)]:
-                    gv.currentLine = int(line[3], 2)
+                if get_value(line[1]) >= get_value(line[2]):
+                    gv.currentLine = get_value(line[3])
             elif line[0] == "00100011":
-                if gv.memory[int(line[1], 2)] <= gv.memory[int(line[2], 2)]:
-                    gv.currentLine = int(line[3], 2)
+                if get_value(line[1]) <= get_value(line[2]):
+                    gv.currentLine = get_value(line[3])
             elif line[0] == "00100110":
-                if gv.memory[int(line[1], 2)] > gv.memory[int(line[2], 2)]:
-                    gv.currentLine = int(line[3], 2)
-            elif line[0] == "00100111":
-                if gv.memory[int(line[1], 2)] < gv.memory[int(line[2], 2)]:
-                    gv.currentLine = int(line[3], 2)
+                if get_value(line[1]) > get_value(line[2]):
+                    gv.currentLine = get_value(line[3])
+            elif line[0] == "00100111": # less than
+                if get_value(line[1]) < get_value(line[2]):
+                    gv.currentLine = get_value(line[3])
             elif line[0] == "00100101":
-                if gv.memory[int(line[1], 2)] != gv.memory[int(line[2], 2)]:
-                    gv.currentLine = int(line[3], 2)
+                if get_value(line[1]) != get_value(line[2]):
+                    gv.currentLine = get_value(line[3])
         elif line[0] == "00001010":  # reading a specific line from file
-            target_line = int(gv.memory[int(line[1], 2)], 2)
-            result = '00000000'  # default value if line not found
+            target_line = get_value(line[1])
+            result = 0  # default value if line not found
 
             with open("gv.memory.bhm", "r") as file:
                 for current_line_number, line_text in enumerate(file):
@@ -113,9 +121,9 @@ class executor:
             gv.memory[int(line[2], 2)] = result
 
         elif line[0] == "00010101":  # writing to gv.memory
-            whatToWrite = gv.memory[int(line[1], 2)]
-            where = int(line[2], 2)
-            with open("gv.memory.bhm", "r") as file:
+            whatToWrite = to_bin(int(line[1]))
+            where = get_value(line[2])
+            with open("memory.bhm", "r") as file:
                 file_contents = file.read().splitlines()
 
             file_contents[where] = whatToWrite
@@ -125,7 +133,7 @@ class executor:
 
         elif line[0] == "00001111":
             # fetch command token from gv.memory (could be str/int/char) and normalize to 8-bit binary string
-            raw_cmd = gv.memory[int(line[1], 2)]
+            raw_cmd = get_value(line[1])
             if isinstance(raw_cmd, str) and all(c in '01' for c in raw_cmd) and len(raw_cmd) == 8:
                 cmd_bin = raw_cmd
             else:
@@ -160,12 +168,12 @@ class executor:
             gv.currentLine = 0               # ensure nested run starts at its own beginning
             self.interprit(command_line, o44=True)
             gv.currentLine = saved_current   # restore outer execution point
-        elif line[0] == "01000000":
-            gv.currentLine = int(line[1], 2)
+        elif line[0] == "01000000": # goto
+            gv.currentLine = get_value(line[1])
         elif line[0] == "01011111":  # threading
-            startLine = int(line[0], 2)
-            endLine = int(line[1], 2)
-            self.startTime = int(line[2], 2)
+            startLine = get_value(line[0])
+            endLine = get_value(line[1])
+            self.startTime = get_value(line[2])
             self.threadIT(startLine, endLine, gv.code)
         elif line[0] == "01001010":
-            time.sleep(int(line[1], 2))
+            time.sleep(get_value(line[1])/100)
