@@ -5,3 +5,4 @@ code = ""
 debug = False
 testing = False
 pref = False
+inspect = False
