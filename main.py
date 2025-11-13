@@ -14,10 +14,9 @@ def parse_flags():
             return
         elif arg == "-d":
             gv.debug = True
+        elif arg == "-p":
+            gv.pref = True
         else:
-            if arg.split("=")[0] == "-t" or "--run-tests":
-                # running unit tests
-                gv.testing = True
             if arg.split("=")[0] == "s" or "--set":
                 # set some memory to a value
                 print(arg.split("=")[1].split(":")[0])
@@ -53,6 +52,7 @@ def main():
             	-v     --verbose        The flag used to enable vebose mode
             	-s     --set            Change the memory value at a location
             	-t     --run-tests      Run tests on your code
+            	-p     --pref           Mesure the time it takes for each action
             usage: command run <file> -dv --run-tests="tests/*"
             	""")
             return 1

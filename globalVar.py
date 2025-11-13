@@ -4,3 +4,4 @@ currentLine = 0
 code = ""
 debug = False
 testing = False
+pref = False

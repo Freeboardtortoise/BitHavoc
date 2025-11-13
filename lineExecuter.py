@@ -3,6 +3,8 @@ import globalVar as gv
 import sys
 import threading
 
+import time
+
 if sys.platform.startswith('win'):
     import msvcrt
 
@@ -26,13 +28,18 @@ else:
         print(ch, end='', flush=True)
         return ch
 
-class executor:
-    def init():
-        pass
-        
+class Executor:
+    def __init__(self):
+        print("----program start----")
+        if gv.pref:
+            self.startTime = time.time()
+            self.startTimesProccesses = []
+            self.endTimesProccesses = []
+            self.processes = []
+
     def threadIT(self,  startLine, endLine, code):
         if gv.debug == True:
-            print(f"Debug: starting thread on line {startline} until line {endLine}")
+            print(f"Debug: starting thread on line {startLine} until line {endLine}")
         newCode = code[startLine:endLine]
         threading.Thread(target=self.newThread, args=(newCode, )).start()
 
@@ -42,11 +49,13 @@ class executor:
             line = code[current_line]
             self.execute_line(line)
 
-    print("----program start----")
     def execute_line(self,  line):
         if len(" ".join(line)) < 7:
             gv.currentLine+=1
             return False
+
+        if gv.pref:
+            self.startTimesProccesses.append(time.time())
         print(f"Debug: executing line number: {gv.currentLine} with value {line}")
         line = line.split(" ")
         if line[0] == "00000001":
@@ -69,27 +78,26 @@ class executor:
         elif line[0] == "00011010":
             gv.memory[int(line[1],2)] = int(gv.memory[int(line[2],2)],2) / int(gv.memory[int(line[3],2)],2)
         gv.currentLine+=1
-
-        if line[0][0] == "1": #if statements
-            if line[0] == "00100001":
-                if gv.memory[int(line[1], 2)] == gv.memory[int(line[2], 2)]:
-                    gv.currentLine=int(line[3], 2)
-                    print(f"goto {int(line[3], 2)}")
-            elif line[0] == "00100010":
-                if gv.memory[int(line[1],2)] >= gv.memory[int(line[2],2)]:
-                    gv.currentLine=int(line[3], 2)
-            elif line[0] == "00100011":
-                if gv.memory[int(line[1],2)] <= gv.memory[int(line[2],2)]:
-                    gv.currentLine=int(line[3], 2)
-            elif line[0] == "00100110":
-                if gv.memory[int(line[1],2)] > gv.memory[int(line[2],2)]:
-                    gv.currentLine=int(line[3], 2)
-            elif line[0] == "00100111":
-                if gv.memory[int(line[1],2)] < gv.memory[int(line[2],2)]:
-                    gv.currentLine=int(line[3], 2)
-            elif line[0] == "00100101":
-                if gv.memory[int(line[1],2)] != gv.memory[int(line[2],2)]:
-                    gv.currentLine=int(line[3], 2)
+ #if statements
+        if line[0] == "00100001":
+            if gv.memory[int(line[1], 2)] == gv.memory[int(line[2], 2)]:
+                gv.currentLine=int(line[3], 2)
+                print(f"goto {int(line[3], 2)}")
+        elif line[0] == "00100010":
+            if gv.memory[int(line[1],2)] >= gv.memory[int(line[2],2)]:
+                gv.currentLine=int(line[3], 2)
+        elif line[0] == "00100011":
+            if gv.memory[int(line[1],2)] <= gv.memory[int(line[2],2)]:
+                gv.currentLine=int(line[3], 2)
+        elif line[0] == "00100110":
+            if gv.memory[int(line[1],2)] > gv.memory[int(line[2],2)]:
+                gv.currentLine=int(line[3], 2)
+        elif line[0] == "00100111":
+            if gv.memory[int(line[1],2)] < gv.memory[int(line[2],2)]:
+                gv.currentLine=int(line[3], 2)
+        elif line[0] == "00100101":
+            if gv.memory[int(line[1],2)] != gv.memory[int(line[2],2)]:
+                gv.currentLine=int(line[3], 2)
         elif line[0] == "00001010":  # reading a specific line from file
             target_line = int(gv.memory[int(line[1], 2)], 2)
             result = '00000000'  # default value if line not found
@@ -159,3 +167,6 @@ class executor:
             self.threadIT(startLine,endLine,gv.code)
         elif line[0] == "01001010":
             time.sleep(int(line[1], 2))
+        if gv.pref:
+            self.endTimesProccesses.append(time.time())
+            self.processes.append(line)

@@ -38,8 +38,8 @@ def createMemoryFile(bytes):
     with open("memory.bhm", "w") as file:
         for i in range(bytes):
             file.write("00000000\n")
-line_executer = le.executor()
 def interprit(code, arg=None, o44=False):
+    line_executer = le.Executor()
     if (gv.debug):
         print("interpritting")
     gv.code=code
@@ -50,3 +50,10 @@ def interprit(code, arg=None, o44=False):
         time.sleep(0.01)
         line = newCode[gv.currentLine]
         line_executer.execute_line(line)
+    line_executer.endTime = time.time()
+    if (gv.pref):
+        print("time and performance")
+        print(f"totalTime {line_executer.endTime-line_executer.startTime}")
+        for line, start,end in zip(line_executer.processes, line_executer.startTimesProccesses, line_executer.endTimesProccesses):
+            print(f"     proccess {line}: time: {end-start:.10f}")
+
