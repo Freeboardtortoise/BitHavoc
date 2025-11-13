@@ -52,6 +52,14 @@ python3 main.py run main.bh
 
 The bitHavoc editor is an editor that prioritises speed and you can only type 1 0 space or enter
 
+## commands and controls for the BH editor
+
+| Command | what does it do                                                                                          |
+| ------- | -------------------------------------------------------------------------------------------------------- |
+| q       | quits the editor                                                                                         |
+| s       | saves the file (if there is no file you opened or not saved to anything eg. new file it will prompt you) |
+| l       | loads a file (will prompt you for a file name or path)                                                   |
+
 ## bitHavoc op Codes
 
 | Op code  | function                          |
@@ -59,7 +67,6 @@ The bitHavoc editor is an editor that prioritises speed and you can only type 1 
 | 00000001 | set [1] to value of address [2]   |
 | 00000010 | read from user 1 bit into [1]     |
 | 00000011 | write memory adress [1] to screen |
-| 00000100 | set memory[0] to [1] |
 
 If statements
 |Opt Code|function|
@@ -78,7 +85,6 @@ running from memory
 
 persistant storage
 | Opt Code | function |
-| ------------ | ------------- |
 | 00001010 | load from persistant memory from [1] to [2] in memory |
 | 00010101 | write to persistant memory from memory at [1] to persistant at [2] |
 

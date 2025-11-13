@@ -2,6 +2,7 @@ import time
 import globalVar as gv
 import sys
 import threading
+
 if sys.platform.startswith('win'):
     import msvcrt
 
@@ -30,6 +31,8 @@ class executor:
         pass
         
     def threadIT(self,  startLine, endLine, code):
+        if gv.debug == True:
+            print(f"Debug: starting thread on line {startline} until line {endLine}")
         newCode = code[startLine:endLine]
         threading.Thread(target=self.newThread, args=(newCode, )).start()
 
@@ -38,31 +41,33 @@ class executor:
         while current_line < len(code.splitlines()):
             line = code[current_line]
             self.execute_line(line)
-            current_line+=1
+
+    print("----program start----")
     def execute_line(self,  line):
         if len(" ".join(line)) < 7:
             gv.currentLine+=1
             return False
+        print(f"Debug: executing line number: {gv.currentLine} with value {line}")
         line = line.split(" ")
         if line[0] == "00000001":
-            gv.memory[int(line[1], 2)] = gv.memory[int(line[2], 2)]
+             gv.memory[int(line[1], 2)] = gv.memory[int(line[2], 2)]
         elif line[0] == "00000010":
             gv.memory[int(line[1], 2)] = "0"+bin(ord(read_char()))[2:]
-        elif line[0] == "00000011":
-            address = int(line[1], 2)
+        elif line[0] == "00000011": # print
+            address = int(line[1],2)
             print(chr(int(gv.memory[address],2)), end='', flush=True)
         elif line[0] == "00000100":
             gv.memory[int(line[1],2)] = line[2]
 
         # mathamatical operations
         elif line[0] == "00010100":
-            gv.memory[int(line[1],2)] = bin(int(gv.memory[int(line[2],2)],2) + int(gv.memory[int(line[3],2)],2))[2:]
+            gv.memory[int(line[1],2)] = int(gv.memory[int(line[2],2)],2) + int(gv.memory[int(line[3],2)],2)
         elif line[0] == "00011100":
-            gv.memory[int(line[1],2)] = bin(int(gv.memory[int(line[2],2)],2) * int(gv.memory[int(line[3],2)],2))[2:]
+            gv.memory[int(line[1],2)] = int(gv.memory[int(line[2],2)],2) * int(gv.memory[int(line[3],2)],2)
         elif line[0] == "00011000":
-            gv.memory[int(line[1],2)] = bin(int(gv.memory[int(line[2],2)],2) - int(gv.memory[int(line[3],2)],2))[2:]
+            gv.memory[int(line[1],2)] = int(gv.memory[int(line[2],2)],2) - int(gv.memory[int(line[3],2)],2)
         elif line[0] == "00011010":
-            gv.memory[int(line[1],2)] = bin(int(gv.memory[int(line[2],2)],2) / int(gv.memory[int(line[3],2)],2))[2:]
+            gv.memory[int(line[1],2)] = int(gv.memory[int(line[2],2)],2) / int(gv.memory[int(line[3],2)],2)
         gv.currentLine+=1
 
         if line[0][0] == "1": #if statements
@@ -89,7 +94,7 @@ class executor:
             target_line = int(gv.memory[int(line[1], 2)], 2)
             result = '00000000'  # default value if line not found
 
-            with open("memory.bhm", "r") as file:
+            with open("gv.memory.bhm", "r") as file:
                 for current_line_number, line_text in enumerate(file):
                     if current_line_number == target_line:
                         result = line_text.strip()
@@ -100,7 +105,7 @@ class executor:
         elif line[0] == "00010101": #writing to gv.memory
             whatToWrite=gv.memory[int(line[1], 2)]
             where = int(line[2],2)
-            with open("memory.bhm", "r") as file:
+            with open("gv.memory.bhm", "r") as file:
                 file_contents = file.read().splitlines()
 
             file_contents[where] = whatToWrite

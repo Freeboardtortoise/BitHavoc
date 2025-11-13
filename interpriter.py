@@ -40,9 +40,9 @@ def createMemoryFile(bytes):
             file.write("00000000\n")
 line_executer = le.executor()
 def interprit(code, arg=None, o44=False):
+    if (gv.debug):
+        print("interpritting")
     gv.code=code
-    if arg is not None:
-        gv.memory[int("10000000",2)] = arg
     newCode=code.split("\n")
     while gv.currentLine < len(newCode):
         if o44==True:
