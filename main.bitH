@@ -1,4 +1,53 @@
-00000001 00000001 10000001
-00000001 00000010 11010101
-00000011 00000011
-00000011 00000010
+
+// ------------------------
+// Memory Initialization
+// ------------------------
+00000001 00000001 00000000  # memory[1] = 0
+00000001 00000010 00000000  # memory[2] = 0
+00000001 00000011 00000000  # memory[3] = 0
+
+// ------------------------
+// Threading test
+// ------------------------
+// Thread 1: increment memory[1] three times
+01011111 00000100 00000110  # start thread 1: lines 4-6
+
+// Thread 2: increment memory[2] three times
+01011111 00000110 00000110  # start thread 2: lines 6-8
+
+// Sleep 1 second to let threads finish
+01001010 00000001
+
+// ------------------------
+// Main arithmetic test
+// ------------------------
+00010100 00000011 00000001 00000010  # memory[3] = memory[1] + memory[2]
+
+// ------------------------
+// Execute-from-memory test
+// ------------------------
+// Store a command to increment memory[3] by 1
+00000001 00000100 00010100  # memory[4] = add opcode
+00000001 00000101 00000011  # memory[5] = arg1 (destination: memory[3])
+00000001 00000110 00000011  # memory[6] = arg2 (source: memory[3])
+00000001 00000111 00000001  # memory[7] = arg3 (immediate: 1)
+
+# Execute stored command
+00001111 00000100 00000101 00000110 00000111
+
+// ------------------------
+// Conditional test
+// ------------------------
+// If memory[3] == 7, jump to line 24 (print)
+00100001 00000011 00000011 00011000
+
+// Otherwise increment memory[3] again
+00010100 00000011 00000011 00000001
+
+// ------------------------
+// Print results
+// ------------------------
+00000011 00000001  # memory[1]
+00000011 00000010  # memory[2]
+00000011 00000011  # memory[3]
+

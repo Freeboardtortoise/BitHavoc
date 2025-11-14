@@ -70,9 +70,11 @@ def main():
             return
         with open(arg, "r") as f:
             code = f.read()
-
-        interpriter.interprit(code)
-
+        try:
+           
+            interpriter.interprit(code)
+        except KeyboardInterrupt:
+            print("keyboard interrupt")
         # inspector
         if gv.inspect:
             # drop into a repr
@@ -82,7 +84,7 @@ def main():
             while command != "exit":
                 command = input("command >>> ")
                 gv.debug = False
-                gv.currentLine = None
+                gv.currentLine = 0
                 executor.execute_line(command)
 
 #        except FileNotFoundError:

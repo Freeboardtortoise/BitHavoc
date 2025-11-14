@@ -19,3 +19,9 @@ venv/
 .venv/
 env/
 .env/
+otherLaptopCode
+memory.bhm
+main.bitH
+TkTUI
+
+.gitignore
