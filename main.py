@@ -13,7 +13,7 @@ def parse_flags():
             print("Commands:")
             print("  run <filename> <flags>")
             print("  create-persistent-storage <size>")
-            return
+            quit()
         elif arg == "-d" or arg == "--debug":
             gv.debug = True
         elif arg == "-p" or arg == "--pref":
@@ -21,7 +21,13 @@ def parse_flags():
         elif arg == "-i" or arg == "--inspect":
             gv.inspect = True
         else:
-            if arg.split("=")[0] == "s" or arg == "--set":
+            if arg.split("=")[0] == "-s" or arg == "--set":
+                if len(arg.split("=")[0]) == 1:
+                    print("add a = after the -s or --set")
+                    quit()
+                if len(arg.split("=")[1].split(":")) == 1:
+                    print("add a : between the index and the value eg. -s=00000001:00101010")
+                    quit()
                 # set some memory to a value
                 print(arg.split("=")[1].split(":")[0])
                 gv.memory[int(arg.split("=")[1].split(":")[0],2)] = arg.split("=")[1].split(":")[1]
@@ -68,8 +74,14 @@ def main():
         if ".." in arg or arg.startswith("/"):
             print("Invalid filename")
             return
-        with open(arg, "r") as f:
-            code = f.read()
+        try:
+            with open(arg, "r") as f:
+                code = f.read()
+        except:
+            print(f"error opening the file {arg}")
+            return False
+
+        # runnig the code
         try:
            
             interpriter.interprit(code)

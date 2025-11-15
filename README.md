@@ -2,13 +2,12 @@
 
 ## What is bit havoc
 
-bit havoc is a binary style language for writing little toy OS's.
+bit havoc is a binary style eccentric programming language for writing little toy OS's.
 
 ## The language
 
 The language consists of 4 charactors
 1,0, ,\n
-in the BitHavocEditor those are the only charactors you can type and the rest will be 1 if it is on the left side of the keyboard and 0 if it is on the right.
 
 ## How to use bitHavoc
 
@@ -30,12 +29,6 @@ sudo apt install python3
 figure it out
 ```
 
-start editing a .bh file with the bhEditor
-
-```
-python3 editor.py main.bh
-```
-
 create persistant storage (if needed)
 
 ```
@@ -48,25 +41,13 @@ run the bitHavoc file
 python3 main.py run main.bh
 ```
 
-## what is the bitHavocEditor
-
-The bitHavoc editor is an editor that prioritises speed and you can only type 1 0 space or enter
-
-## commands and controls for the BH editor
-
-| Command | what does it do                                                                                          |
-| ------- | -------------------------------------------------------------------------------------------------------- |
-| q       | quits the editor                                                                                         |
-| s       | saves the file (if there is no file you opened or not saved to anything eg. new file it will prompt you) |
-| l       | loads a file (will prompt you for a file name or path)                                                   |
-
 ## bitHavoc op Codes
 
 | Op code  | function                          |
 | -------- | --------------------------------- |
-| 00000001 | set [1] to value of address [2]   |
+| 00000001 | set [1] to [2]   |
 | 00000010 | read from user 1 bit into [1]     |
-| 00000011 | write memory adress [1] to screen |
+| 00000011 | write [1] to screen |
 
 If statements
 |Opt Code|function|
@@ -85,6 +66,7 @@ running from memory
 
 persistant storage
 | Opt Code | function |
+|----------|----------|
 | 00001010 | load from persistant memory from [1] to [2] in memory |
 | 00010101 | write to persistant memory from memory at [1] to persistant at [2] |
 
@@ -96,3 +78,8 @@ Time
 | Opt Code | function |
 | ------------- | ----------- |
 | 01001010 | waits [1] secconds |
+
+*General memory and things*
+
+if the value starts with 0 then it is a memory address
+if the value starts with 1 then it is a hard coded value
